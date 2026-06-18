@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chamado do Aluno</title>
+    <link rel="stylesheet" href="formulario.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="form-image">
+            <img src="./img/undraw_faq_pgxi.svg" alt="Logo CPS">
+        </div>
+
+        <form action="salvar_tickets.php" method="POST" enctype="multipart/form-data">
+            
+            <div class="form">
+                <div class="form-header">
+                    <h1>Abrir Chamado</h1>
+                </div>
+
+                <div class="input-group">
+
+                    <div class="input-box">
+                        <label for="SalaAluno">Sala</label>
+                        <input type="text" id="SalaAluno" name="sala" placeholder="Digite sua sala">
+                    </div>
+
+                    <div class="input-box">
+                        <label for="SelecaoProblema">Tipo do problema</label>
+                        <select id="SelecaoProblema" name="tickets_type">
+                            <option value="Hardware">Hardware</option>
+                            <option value="Software">Software</option>
+                            <option value="Conexão">Conexão</option>
+                            <option value="Estrutura">Estrutura</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="textarea1">Descrição do problema</label>
+                        <textarea id="textarea1" name="description" placeholder="Descreva detalhadamente seu problema..."></textarea>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="imageInput" class="upload-button">Inserir imagem</label>
+                        <input type="file" id="imageInput" name="image" class="hidden-input" accept="image/*">
+                        <img id="btnPreview" class="image-preview" src="" alt="Preview" style="display: none;">
+                    </div>
+
+                </div>
+
+                <div class="continue-button">
+                    <button type="submit">Enviar Chamado</button>
+                </div>
+            </div>
+
+        </form> </div>
+
+    <script src="formulario.js"></script>
+</body>
+</html>

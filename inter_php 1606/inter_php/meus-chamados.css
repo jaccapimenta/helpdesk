@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* ==========================================================================
+   REGRAS GLOBAIS E RESET (idêntico ao formulário original)
+   ========================================================================== */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #8B0000, #c62828);
+    padding: 20px;
+}
+
+/* Container mestre centralizado */
+.container{
+    width: 90%;
+    max-width: 900px; /* Ajustado para melhor leitura de listas */
+    background: white;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.form{
+    width: 100%;
+    padding: 3rem;
+}
+
+.form-header{
+    margin-bottom: 2rem;
+}
+
+.form-header h1{
+    color: #333;
+    font-size: 2rem;
+}
+
+/* Estilo do Botão "+ Novo Chamado" herdando o padrão .upload-button */
+.upload-button{
+    background: #c62828;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.upload-button:hover{
+    background: #a81f1f;
+}
+
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS DA LISTAGEM DE CHAMADOS
+   ========================================================================== */
+
+/* Caixa de alerta verde de sucesso */
+.alerta-sucesso {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    border: 1px solid #c8e6c9;
+}
+
+/* Lista vertical de cartões */
+.ticketss-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* O Cartão do chamado individual */
+.tickets-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eee;
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: #fafafa;
+    transition: 0.2s ease-in-out;
+}
+
+.tickets-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background: #ffffff;
+    border-color: #ccc;
+}
+
+/* Bloco de informações textuais dentro do card */
+.tickets-info {
+    flex: 1;
+    padding-right: 15px;
+}
+
+.tickets-meta {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+/* Tag cinza indicando o Tipo do Problema (Hardware, Software...) */
+.badge-tipo {
+    background: #f1f1f1;
+    color: #333;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+/* Data do chamado */
+.tickets-data {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* Descrição detalhada do problema */
+.tickets-description {
+    color: #444;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    word-break: break-word; /* Evita que textos longos quebrem o layout */
+}
+
+/* Badge de status (Aberto / Fechado) */
+.badge-status {
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-aberto {
+    color: #c62828; /* Vermelho padrão para chamados ativos */
+}
+
+.status-fechado {
+    color: #2e7d32; /* Verde para resolvidos */
+}
+
+/* Miniatura da imagem anexada no lado direito do card */
+.tickets-image-preview img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover; /* Recorta a imagem proporcionalmente dentro do quadrado */
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: 0.2s;
+    display: block;
+}
+
+.tickets-image-preview img:hover {
+    transform: scale(1.05);
+    border-color: #c62828;
+}
+
+/* ==========================================================================
+   RESPONSIVidADE (Garante que funcione em celulares)
+   ========================================================================== */
+@media screen and (max-width: 600px) {
+    .form {
+        padding: 1.5rem; /* Diminui o espaçamento interno em telas pequenas */
+    }
+
+    .form-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    .form-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .tickets-card {
+        flex-direction: column-reverse; /* No celular, joga a imagem para cima do texto */
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .tickets-info {
+        padding-right: 0;
+        width: 100%;
+    }
+    
+    .tickets-image-preview {
+        width: 100%;
+    }
+
+    .tickets-image-preview img {
+        width: 100%;
+        height: 150px; /* Transforma a miniatura em um banner horizontal no topo do card */
+    }
+}

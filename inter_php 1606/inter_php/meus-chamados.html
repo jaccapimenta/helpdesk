@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Chamados</title>
+    <link rel="stylesheet" href="meus-chamados.css">
+</head>
+<body>
+    <div class="container visualizacao-container">
+        
+        <div class="form" style="width: 100%;">
+            <div class="form-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Meus Chamados</h1>
+                <a href="formulario.html" class="upload-button" style="text-decoration: none; font-size: 0.9rem;">+ Novo Chamado</a>
+            </div>
+
+            <?php if (isset($_GET['sucesso'])): ?>
+                <div class="alerta-sucesso">🎉 Chamado aberto com sucesso!</div>
+            <?php endif; ?>
+
+            <div class="ticketss-list">
+                <?php if (empty($ticketss)): ?>
+                    <p style="color: #666; text-align: center; margin-top: 2rem;">Você ainda não possui nenhum chamado aberto.</p>
+                <?php else: ?>
+                    
+                    <?php foreach ($ticketss as $tickets): ?>
+                        <div class="tickets-card">
+                            <div class="tickets-info">
+                                <div class="tickets-meta">
+                                    <span class="badge-tipo"><?php echo htmlspecialchars($tickets['tickets_type']); ?></span>
+                                    <span class="tickets-data">📅 <?php echo date('d/m/Y H:i', strtotime($tickets['openningdate'])); ?></span>
+                                </div>
+                                <p class="tickets-description"><?php echo nl2br(htmlspecialchars($tickets['description'])); ?></p>
+                                
+                                <div style="margin-top: 10px;">
+                                    <span class="badge-status <?php echo ($tickets['status_id'] == 1) ? 'status-aberto' : 'status-fechado'; ?>">
+                                        ● <?php echo htmlspecialchars($tickets['status_name']); ?>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <?php if (!empty($tickets['image']) && file_exists($tickets['image'])): ?>
+                                <div class="tickets-image-preview">
+                                    <a href="<?php echo $tickets['image']; ?>" target="_blank">
+                                        <img src="<?php echo $tickets['image']; ?>" alt="Evidência do chamado">
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

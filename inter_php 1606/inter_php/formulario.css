@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #8B0000, #c62828);
+    padding: 20px;
+}
+
+.container{
+    width: 90%;
+    max-width: 1100px;
+    background: white;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.form-image{
+    width: 40%;
+    background: #f3f4ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.form-image img{
+    width: 100%;
+    max-width: 300px;
+}
+
+/* AJUSTE AQUI: O elemento form agora é o flex-child do container */
+form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form{
+    width: 100%; /* Ocupa todo o espaço interno do form */
+    padding: 3rem;
+}
+
+.form-header{
+    margin-bottom: 2rem;
+}
+
+.form-header h1{
+    color: #333;
+    font-size: 2rem;
+}
+
+.input-group{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box label{
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.input-box input,
+.input-box select,
+.input-box textarea{
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.input-box input:focus,
+.input-box select:focus,
+.input-box textarea:focus{
+    border-color: #c62828;
+    box-shadow: 0 0 8px rgba(198,40,40,0.2);
+}
+
+textarea{
+    height: 150px;
+    resize: none;
+}
+
+.upload-button{
+    background: #c62828;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content;
+    transition: 0.3s;
+}
+
+.upload-button:hover{
+    background: #a81f1f;
+}
+
+.hidden-input{
+    display: none;
+}
+
+.image-preview{
+    width: 100%;
+    max-width: 250px;
+    margin-top: 15px;
+    border-radius: 10px;
+    display: none;
+}
+
+.continue-button{
+    margin-top: 2rem;
+}
+
+.continue-button button{
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background: #c62828;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.continue-button button:hover{
+    background: #a81f1f;
+}
+
+/* RESPONSIVO */
+@media screen and (max-width: 900px){
+    .container{
+        flex-direction: column;
+    }
+
+    /* AJUSTE AQUI: Ambos resetam para 100% no celular */
+    .form-image,
+    form {
+        width: 100%;
+    }
+
+    .form-image{
+        height: 250px;
+    }
+}x'

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Aluno - HelpDesk</title>
+    <link rel="stylesheet" href="painel.css">
+</head>
+<body>
+    <div class="container menu-container">
+        <div class="form">
+            <div class="form-header" style="text-align: center;">
+                <h1>Olá, <?php echo htmlspecialchars($users_name); ?>! 👋</h1>
+                <p style="color: #666; margin-top: 0.5rem;">O que você deseja fazer hoje?</p>
+            </div>
+
+            <div class="menu-buttons">
+                <a href="formulario.html" class="menu-btn btn-abrir">
+                    <span class="icon">➕</span>
+                    <div class="btn-text">
+                        <h3>Criar Chamado</h3>
+                        <p>Relate um problema técnico em uma sala ou equipamento.</p>
+                    </div>
+                </a>
+
+                <a href="meus-chamados.php" class="menu-btn btn-visualizar">
+                    <span class="icon">📋</span>
+                    <div class="btn-text">
+                        <h3>Ver Meus Chamados</h3>
+                        <p>Acompanhe o andamento e o status dos seus chamados enviados.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div style="text-align: center; margin-top: 2.5rem;">
+                <a href="login.html" style="color: #c62828; text-decoration: none; font-weight: 600; font-size: 0.9rem;">Sair do Sistema</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

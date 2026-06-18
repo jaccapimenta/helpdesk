@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #8B0000, #c62828);
+    padding: 20px;
+}
+
+.menu-container {
+    max-width: 650px; /* Um tamanho menor e mais elegante para o menu */
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+    width: 100%;
+}
+
+.form {
+    padding: 3rem;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* O estilo base dos dois botões grandes */
+.menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 2px solid #eee;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s ease;
+    background: #fafafa;
+}
+
+.menu-btn .icon {
+    font-size: 2.5rem;
+}
+
+.menu-btn h3 {
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 0.2rem;
+    transition: 0.3s;
+}
+
+.menu-btn p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Efeito Hover (passar o mouse por cima) */
+.menu-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background: #fff;
+}
+
+/* Destaque individual para o botão de criar quando passa o mouse (borda vermelha CPS) */
+.btn-abrir:hover {
+    border-color: #c62828;
+}
+.btn-abrir:hover h3 {
+    color: #c62828;
+}
+
+/* Destaque individual para o botão de visualizar */
+.btn-visualizar:hover {
+    border-color: #444;
+}
+.btn-visualizar:hover h3 {
+    color: #444;
+}
+
+@media screen and (max-width: 500px) {
+    .form {
+        padding: 1.5rem;
+    }
+    .menu-btn {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+}
