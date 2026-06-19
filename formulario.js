@@ -1,5 +1,5 @@
-const imageInput = document.getElementByid('imageInput');
-const preview = document.getElementByid('btnPreview');
+const imageInput = document.getElementById('imageInput');
+const preview = document.getElementById('btnPreview');
 
 imageInput.addEventListener('change', function(){
 
@@ -21,4 +21,3 @@ imageInput.addEventListener('change', function(){
     }
 
 });
-

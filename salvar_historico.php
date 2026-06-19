@@ -2,6 +2,10 @@
 session_start();
 require_once 'conexao.php';
 
+if (!isset($_SESSION['tipo_usuario']) || $_SESSION['tipo_usuario'] !== 'tecnico') {
+    die("Acesso negado.");
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tickets_id = $_POST['tickets_id']; // De qual chamado é essa resposta
     $description = $_POST['description']; // O texto que o técnico digitador
@@ -13,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Insere a linha na tabela de histórico
-        $sql = "INSERT INTO feedback_history (status_id, description, tech_support_id, Date) 
+        $sql = "INSERT INTO feedback_histories (status_id, description, tech_support_id, Date) 
                 VALUES (:status_id, :description, :tech_id, :data_envio)";
                 
         $stmt = $pdo->prepare($sql);

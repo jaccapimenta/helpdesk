@@ -2,9 +2,15 @@
 // 1. Inclui a conexão e inicia a sessão
 require_once 'conexao.php';
 session_start();
+require_once 'auto_finalizar_chamados.php';
 
 // Simula o usuário logado
-$users_id = $_SESSION['users_id'] ?? 1; 
+if (!isset($_SESSION['users_id'])) {
+    header("Location: login.html");
+    exit();
+}
+
+$users_id = $_SESSION['users_id'];
 
 try {
     // 2. Busca os chamados do usuário juntamente com a descrição do status
