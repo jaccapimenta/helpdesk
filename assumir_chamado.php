@@ -17,7 +17,9 @@ if ($tickets_id) {
         // Atualiza o chamado colocando o id do técnico e mudando o status
         $sql = "UPDATE tickets 
                 SET tech_support_id = :tech_id, status_id = :status_id 
-                WHERE id = :tickets_id";
+                WHERE id = :tickets_id
+                  AND status_id = 1
+                  AND tech_support_id IS NULL";
                 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([

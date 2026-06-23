@@ -17,6 +17,13 @@ CREATE TABLE status (
     description VARCHAR(50) NOT NULL
 );
 
+INSERT INTO status (id, description) VALUES
+    (1, 'Aberto'),
+    (2, 'Em andamento'),
+    (3, 'Encerrado'),
+    (4, 'Aguardando confirmacao do usuario'),
+    (5, 'Chamado Não Resolvido');
+
 CREATE TABLE tickets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tickets_type VARCHAR(50) NOT NULL,
@@ -27,6 +34,8 @@ CREATE TABLE tickets (
     users_id INT,
     status_id INT,
     tech_support_id INT,
+    satisfaction_level TINYINT NULL,
+    last_user_response DATETIME NULL,
 
     FOREIGN KEY (users_id) REFERENCES users(id),
     FOREIGN KEY (status_id) REFERENCES status(id),
@@ -39,6 +48,10 @@ CREATE TABLE feedback_histories (
     Date DATETIME NOT NULL,
     status_id INT,
     tech_support_id INT,
+    tickets_id INT,
+    users_id INT,
     FOREIGN KEY (status_id) REFERENCES status(id),
-    FOREIGN KEY (tech_support_id) REFERENCES tech_support(id)
+    FOREIGN KEY (tech_support_id) REFERENCES tech_support(id),
+    FOREIGN KEY (tickets_id) REFERENCES tickets(id) ON DELETE CASCADE,
+    FOREIGN KEY (users_id) REFERENCES users(id)
 );

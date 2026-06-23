@@ -23,8 +23,11 @@
             <?php if (isset($_GET['confirmado'])): ?>
                 <div class="alerta-sucesso">Obrigado! Sua confirmacao foi registrada.</div>
             <?php endif; ?>
-            <?php if (isset($_GET['reaberto'])): ?>
-                <div class="alerta-atencao">Chamado reaberto como reincidente.</div>
+            <?php if (isset($_GET['nao_resolvido'])): ?>
+                <div class="alerta-atencao">Chamado marcado como nao resolvido. O suporte foi avisado.</div>
+            <?php endif; ?>
+            <?php if (isset($_GET['respondido'])): ?>
+                <div class="alerta-sucesso">Resposta enviada ao suporte.</div>
             <?php endif; ?>
 
             <div class="ticketss-list">
@@ -34,21 +37,68 @@
                     <?php foreach ($ticketss as $tickets): ?>
                         <div class="tickets-card">
                             <div class="tickets-info">
-                                <div class="tickets-meta">
-                                    <span class="badge-tipo"><?php echo htmlspecialchars($tickets['tickets_type']); ?></span>
-                                    <span class="tickets-data"><?php echo date('d/m/Y H:i', strtotime($tickets['openningdate'])); ?></span>
+                                <div class="ticket-summary">
+                                    <div class="ticket-summary-main">
+                                        <div class="tickets-meta">
+                                            <strong class="ticket-id">#<?php echo (int) $tickets['id']; ?></strong>
+                                            <span class="badge-tipo"><?php echo htmlspecialchars($tickets['tickets_type']); ?></span>
+                                            <span class="tickets-data"><?php echo date('d/m/Y H:i', strtotime($tickets['openningdate'])); ?></span>
+                                        </div>
+                                        <span class="badge-status status-<?php echo (int) $tickets['status_id']; ?>">
+                                            <?php echo htmlspecialchars($tickets['status_name']); ?>
+                                        </span>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        class="details-toggle"
+                                        aria-expanded="false"
+                                        aria-controls="ticket-details-<?php echo (int) $tickets['id']; ?>"
+                                    >Ver detalhes</button>
                                 </div>
 
-                                <p class="tickets-description"><?php echo nl2br(htmlspecialchars($tickets['description'])); ?></p>
+                                <div id="ticket-details-<?php echo (int) $tickets['id']; ?>" class="ticket-details" hidden>
+                                    <p class="tickets-description"><?php echo nl2br(htmlspecialchars($tickets['description'])); ?></p>
 
-                                <div style="margin-top: 10px;">
-                                    <span class="badge-status status-<?php echo (int) $tickets['status_id']; ?>">
-                                        <?php echo htmlspecialchars($tickets['status_name']); ?>
-                                    </span>
-                                    <?php if ((int) $tickets['reopened_count'] > 0): ?>
-                                        <span class="badge-reincidente">Reincidente <?php echo (int) $tickets['reopened_count']; ?>x</span>
-                                    <?php endif; ?>
-                                </div>
+                                <?php $historicos = $historicos_por_chamado[$tickets['id']] ?? []; ?>
+                                <?php if (!empty($historicos)): ?>
+                                    <div class="historico-chamado">
+                                        <h3>Atualizacoes do suporte</h3>
+                                        <?php foreach ($historicos as $historico): ?>
+                                            <?php $mensagem_usuario = !empty($historico['users_id']); ?>
+                                            <div class="historico-item">
+                                                <div class="historico-meta">
+                                                    <div class="historico-autor">
+                                                        <span class="autor-badge <?php echo $mensagem_usuario ? 'autor-usuario' : ''; ?>">
+                                                            <?php echo $mensagem_usuario ? 'Usuario' : 'Tecnico'; ?>
+                                                        </span>
+                                                        <strong><?php echo htmlspecialchars($mensagem_usuario ? ($historico['user_name'] ?? 'Usuario') : ($historico['tech_name'] ?? 'Suporte tecnico')); ?></strong>
+                                                    </div>
+                                                    <span><?php echo date('d/m/Y H:i', strtotime($historico['Date'])); ?></span>
+                                                </div>
+                                                <p><?php echo nl2br(htmlspecialchars($historico['description'])); ?></p>
+                                                <small><?php echo htmlspecialchars($historico['status_name'] ?? ''); ?></small>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php
+                                    $tem_mensagem_tecnico = false;
+                                    foreach ($historicos as $historico) {
+                                        if (!empty($historico['tech_support_id'])) {
+                                            $tem_mensagem_tecnico = true;
+                                            break;
+                                        }
+                                    }
+                                ?>
+                                <?php if (in_array((int) $tickets['status_id'], [2, 5], true) && $tem_mensagem_tecnico): ?>
+                                    <form action="responder_chamado.php" method="POST" class="resposta-form">
+                                        <input type="hidden" name="tickets_id" value="<?php echo (int) $tickets['id']; ?>">
+                                        <label for="resposta-<?php echo (int) $tickets['id']; ?>">Responder ao tecnico</label>
+                                        <textarea id="resposta-<?php echo (int) $tickets['id']; ?>" name="description" rows="3" required></textarea>
+                                        <button type="submit">Enviar resposta</button>
+                                    </form>
+                                <?php endif; ?>
 
                                 <?php if ((int) $tickets['status_id'] === 4): ?>
                                     <div class="confirmacao-box">
@@ -67,30 +117,73 @@
                                             <button type="submit">Confirmar solucao</button>
                                         </form>
 
-                                        <form action="reabrir_chamado.php" method="POST" class="confirmacao-form">
+                                        <form action="reabrir_chamado.php" method="POST" class="nao-resolvido-form">
                                             <input type="hidden" name="tickets_id" value="<?php echo (int) $tickets['id']; ?>">
-                                            <button type="submit" class="secondary-button">Nao foi resolvido</button>
+                                            <label for="nao-resolvido-<?php echo (int) $tickets['id']; ?>">Explique o que ainda nao foi resolvido</label>
+                                            <textarea id="nao-resolvido-<?php echo (int) $tickets['id']; ?>" name="description" rows="3" required></textarea>
+                                            <button type="submit" class="secondary-button" disabled>Nao foi resolvido</button>
                                         </form>
                                     </div>
                                 <?php endif; ?>
 
-                                <?php if ((int) $tickets['status_id'] === 3 && !empty($tickets['satisfaction_level'])): ?>
+                                <?php if ((int) $tickets['status_id'] === 3 && empty($tickets['satisfaction_level'])): ?>
+                                    <div class="confirmacao-box">
+                                        <p>Avalie o atendimento deste chamado.</p>
+                                        <form action="confirmar_solucao.php" method="POST" class="confirmacao-form">
+                                            <input type="hidden" name="tickets_id" value="<?php echo (int) $tickets['id']; ?>">
+                                            <select name="satisfaction_level" required>
+                                                <option value="">Nivel de satisfacao</option>
+                                                <option value="5">5 - Muito satisfeito</option>
+                                                <option value="4">4 - Satisfeito</option>
+                                                <option value="3">3 - Regular</option>
+                                                <option value="2">2 - Insatisfeito</option>
+                                                <option value="1">1 - Muito insatisfeito</option>
+                                            </select>
+                                            <button type="submit">Enviar avaliacao</button>
+                                        </form>
+                                    </div>
+                                <?php elseif ((int) $tickets['status_id'] === 3 && !empty($tickets['satisfaction_level'])): ?>
                                     <p class="satisfaction-note">Satisfacao: <?php echo (int) $tickets['satisfaction_level']; ?>/5</p>
-                                <?php endif; ?>
-                            </div>
+                                    <?php endif; ?>
 
-                            <?php if (!empty($tickets['image']) && file_exists($tickets['image'])): ?>
-                                <div class="tickets-image-preview">
-                                    <a href="<?php echo htmlspecialchars($tickets['image']); ?>" target="_blank">
-                                        <img src="<?php echo htmlspecialchars($tickets['image']); ?>" alt="Evidencia do chamado">
-                                    </a>
+                                    <?php if (!empty($tickets['image']) && file_exists($tickets['image'])): ?>
+                                        <div class="tickets-image-preview">
+                                            <a href="<?php echo htmlspecialchars($tickets['image']); ?>" target="_blank">
+                                                <img src="<?php echo htmlspecialchars($tickets['image']); ?>" alt="Evidencia do chamado">
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('.details-toggle').forEach(function (button) {
+            const details = document.getElementById(button.getAttribute('aria-controls'));
+
+            button.addEventListener('click', function () {
+                const willOpen = details.hidden;
+                details.hidden = !willOpen;
+                button.setAttribute('aria-expanded', String(willOpen));
+                button.textContent = willOpen ? 'Fechar detalhes' : 'Ver detalhes';
+            });
+        });
+
+        document.querySelectorAll('.nao-resolvido-form').forEach(function (form) {
+            const message = form.querySelector('textarea[name="description"]');
+            const button = form.querySelector('button[type="submit"]');
+
+            function updateButton() {
+                button.disabled = message.value.trim() === '';
+            }
+
+            message.addEventListener('input', updateButton);
+            updateButton();
+        });
+    </script>
 </body>
 </html>

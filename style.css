@@ -72,7 +72,26 @@ form{
     margin-bottom: 2rem;
 }
 
-.title h1{
+.support-title{
+    border-bottom: 3px solid #a91717;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+}
+
+.support-title h1{
+    color: #8d1717;
+    font-size: 2rem;
+    line-height: 1.15;
+}
+
+.support-title p{
+    color: #444;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-top: 0.45rem;
+}
+
+.title h2{
     font-size: 2rem;
     color: #333;
 }
@@ -160,6 +179,9 @@ form{
 
     .form{
         width: 100%;
+        padding: 2rem;
     }
+
+    .support-title h1{font-size: 1.65rem;}
 
 }

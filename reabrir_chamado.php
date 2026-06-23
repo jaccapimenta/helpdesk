@@ -8,17 +8,16 @@ if (!isset($_SESSION['users_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tickets_id = $_POST['tickets_id'] ?? null;
-    $users_id = $_SESSION['users_id'];
+    $tickets_id = filter_input(INPUT_POST, 'tickets_id', FILTER_VALIDATE_INT);
+    $description = trim($_POST['description'] ?? '');
+    $users_id = (int) $_SESSION['users_id'];
 
-    if ($tickets_id) {
+    if ($tickets_id && $description !== '') {
+        $pdo->beginTransaction();
         $sql = "UPDATE tickets
-                SET status_id = 1,
+                SET status_id = 5,
                     conclusiondate = NULL,
-                    tech_support_id = NULL,
-                    resolution_notice_date = NULL,
-                    last_user_response = NOW(),
-                    reopened_count = reopened_count + 1
+                    last_user_response = NOW()
                 WHERE id = :tickets_id
                   AND users_id = :users_id
                   AND status_id = 4";
@@ -27,9 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':tickets_id' => $tickets_id,
             ':users_id' => $users_id
         ]);
+
+        if ($stmt->rowCount() === 1) {
+            $sql = "INSERT INTO feedback_histories
+                        (tickets_id, status_id, description, users_id, Date)
+                    VALUES (:tickets_id, 5, :description, :users_id, NOW())";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':tickets_id' => $tickets_id,
+                ':description' => $description,
+                ':users_id' => $users_id
+            ]);
+        }
+        $pdo->commit();
     }
 }
 
-header("Location: meus-chamados.php?reaberto=1");
+header("Location: meus-chamados.php?nao_resolvido=1");
 exit();
 ?>

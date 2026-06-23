@@ -109,12 +109,10 @@ body{
 
 /* O Cartão do chamado individual */
 .tickets-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: block;
     border: 1px solid #eee;
     padding: 1.5rem;
-    border-radius: 15px;
+    border-radius: 8px;
     background: #fafafa;
     transition: 0.2s ease-in-out;
 }
@@ -128,14 +126,39 @@ body{
 /* Bloco de informações textuais dentro do card */
 .tickets-info {
     flex: 1;
-    padding-right: 15px;
+}
+
+.ticket-summary {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.ticket-summary-main {
+    min-width: 0;
+}
+
+.ticket-id {
+    color: #b71c1c;
+}
+
+.details-toggle {
+    flex: 0 0 auto;
+}
+
+.ticket-details {
+    border-top: 1px solid #e1e1e1;
+    margin-top: 16px;
+    padding-top: 16px;
 }
 
 .tickets-meta {
     display: flex;
     gap: 15px;
     align-items: center;
-    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.55rem;
 }
 
 /* Tag cinza indicando o Tipo do Problema (Hardware, Software...) */
@@ -193,15 +216,8 @@ body{
     color: #8a5a00;
 }
 
-.badge-reincidente {
-    background: #fff3e0;
-    color: #b45309;
-    border-radius: 20px;
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    margin-left: 8px;
-    padding: 4px 10px;
+.status-5 {
+    color: #b71c1c;
 }
 
 .confirmacao-box {
@@ -210,6 +226,117 @@ body{
     border-radius: 10px;
     margin-top: 1rem;
     padding: 1rem;
+}
+
+.historico-chamado {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 18px;
+    padding-top: 16px;
+}
+
+.historico-chamado h3 {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.historico-item {
+    background: #f7f7f8;
+    border-left: 4px solid #b71c1c;
+    border-radius: 6px;
+    margin-top: 10px;
+    padding: 12px;
+}
+
+.historico-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 7px;
+}
+
+.historico-meta span,
+.historico-item small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.historico-autor {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+.autor-badge {
+    background: #b71c1c;
+    border-radius: 4px;
+    color: #fff !important;
+    font-size: 0.7rem !important;
+    font-weight: 700;
+    padding: 3px 7px;
+    text-transform: uppercase;
+}
+
+.autor-badge.autor-usuario {
+    background: #1565c0;
+}
+
+.resposta-form {
+    border-top: 1px solid #e5e7eb;
+    display: grid;
+    gap: 9px;
+    margin-top: 16px;
+    padding-top: 16px;
+}
+
+.resposta-form label {
+    color: #333;
+    font-weight: 700;
+}
+
+.resposta-form textarea {
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font: inherit;
+    padding: 10px;
+    resize: vertical;
+    width: 100%;
+}
+
+.resposta-form button {
+    justify-self: start;
+}
+
+.nao-resolvido-form {
+    display: grid;
+    gap: 9px;
+    margin-top: 14px;
+}
+
+.nao-resolvido-form label {
+    color: #333;
+    font-weight: 700;
+}
+
+.nao-resolvido-form textarea {
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font: inherit;
+    padding: 10px;
+    resize: vertical;
+    width: 100%;
+}
+
+.nao-resolvido-form button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.historico-item p {
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 7px;
 }
 
 .confirmacao-box p,

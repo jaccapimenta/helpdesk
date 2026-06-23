@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Sao_Paulo');
+
 $host = 'localhost';
 $dbname = 'helpdesk';
 $usersname = 'root';
@@ -10,6 +12,7 @@ try {
     
     // Configura o PDO para lançar erros em caso de falhas
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->exec("SET time_zone = '-03:00'");
 } catch (PDOException $e) {
     die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 }
